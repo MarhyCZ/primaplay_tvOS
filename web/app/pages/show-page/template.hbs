@@ -1,0 +1,75 @@
+<document>
+    <stackTemplate theme="dark">
+        <background>
+            <heroImg src="{{ splash169 showInfo.images.splash169 }}" />
+        </background>
+        <identityBanner>
+            <title style="tv-position: center;">{{ showInfo.localTitle }}</title>
+            <subtitle style="tv-position: center; tv-text-max-lines:6; margin-right:40;">{{showInfo.promoNotice}}</subtitle>
+            <row>
+                <img src="{{ splashAWeb showInfo.images.splashAWeb }}" width="768" height="352" aspectFill="true" />
+            </row>
+        </identityBanner>
+        <collectionList>
+            <shelf>
+                <header>
+                    <title>Poslední epizody</title>
+                </header>
+                <section>
+                    {{#each episodes}}
+                    <lockup data-href-page="play" data-href-page-options="{{toJSON this }}">
+                        <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
+                        <title>{{localTitle}}</title>
+                    </lockup>
+                    {{/each}}
+                    <lockup data-href-page="episodes-list" data-href-page-options="{{toJSON showInfo }}">
+                        <img class="tile16x9" src="{{ asset_url 'img/thumbnails/allepisodes.png'}}" />
+                    </lockup>
+                </section>
+            </shelf>
+            {{#if seasons}}
+            <shelf>
+                <header>
+                    <title>Sezóny</title>
+                </header>
+                <section>
+                    {{#each seasons}}
+                    <lockup data-href-page="episodes-list" data-href-page-options="{{toJSON this }}">
+                        <img class="tile21x9" src="{{ asset_url 'img/thumbnails/21x9.png'}}" />
+                        <overlay>
+                            <title class="showAndScrollTextOnHighlight" style="tv-position: center; tv-align:center; text-align:center;">{{title}}</title>
+                        </overlay>
+                    </lockup>
+                    {{/each}}
+                </section>
+            </shelf>
+            {{/if}}
+            <shelf>
+                <header>
+                    <title>Bonusy</title>
+                </header>
+                <section>
+                    {{#each bonuses}}
+                    <lockup data-href-page="play" data-href-page-options="{{toJSON this }}">
+                        <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
+                        <title>{{localTitle}}</title>
+                    </lockup>
+                    {{/each}}
+                </section>
+            </shelf>
+            <shelf>
+                <header>
+                    <title>Mohlo by vás zajímat</title>
+                </header>
+                <section>
+                    {{#each recommended}}
+                    <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
+                        <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
+                        <title>{{localTitle}}</title>
+                    </lockup>
+                    {{/each}}
+                </section>
+            </shelf>
+        </collectionList>
+    </stackTemplate>
+</document>

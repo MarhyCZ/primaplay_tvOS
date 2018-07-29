@@ -1,0 +1,25 @@
+<document>
+    <stackTemplate>
+        <background>
+            <heroImg src="" />
+        </background>
+        <banner>
+            <title>{{ options.title }}</title>
+        </banner>
+        <collectionList>
+            <grid>
+                <section>
+                    {{#each shows}}
+                    <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
+                        <img class="tile16x9full darkImage" src="{{ splash169 images.splash169 }}" />
+                        <overlay>
+                            <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
+                            <text class="overlayTextLayout">{{ time }}</text>
+                        </overlay>
+                    </lockup>
+                    {{/each}}
+                </section>
+            </grid>
+        </collectionList>
+    </stackTemplate>
+</document>

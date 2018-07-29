@@ -1,0 +1,58 @@
+<document>
+    <stackTemplate class="kids" theme="light">
+        <banner>
+            
+        </banner>
+        <collectionList>
+            <carousel>
+                <section>
+                    {{#each banner }}
+                        <lockup data-href-page="programme-details" data-href-page-options="{{toJSON this }}">
+                            <img src="{{ splashAWeb images.splashAWeb }}" class="darkImage" style="width:960; height:440;" />
+                            <overlay>
+                                <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
+                                <text class="overlayTextLayout">{{ year }}</text>
+                            </overlay>
+                        </lockup>
+                    {{/each}}
+                </section>
+            </carousel>
+            <shelf>
+                <header><title>Pohádky pro nejmenší</title></header>
+                <section>
+                    {{#each proNejmensi }}
+                        <lockup data-href-page="programme-details" data-href-page-options="{{toJSON this }}">
+                            <img class="tile16x9" src="{{ splash169 images.splash169 }}"/>
+                            <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
+                            <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>
+                        </lockup>
+                    {{/each}}
+                </section>
+            </shelf>
+            <shelf>
+                <header><title>Filmové pohádky</title></header>
+                <section>
+                    {{#each filmy }}
+                        <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
+                            <img class="tile85x100" src="{{ coverWeb images.coverWeb }}"/>
+                            <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
+                            <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>
+                        </lockup>
+                    {{/each}}
+                </section>
+            </shelf>
+            <shelf>
+            <header><title>Seriály pro děti</title></header>
+                <section>
+                    {{#each serialy }}
+                        <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
+                            <img class="tile16x9" src="{{ splash169 images.splash169 }}"/>
+                            <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
+                            <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>
+                        </lockup>
+                    {{/each}}
+                </section>
+            </shelf>
+        </collectionList>
+    </stackTemplate>
+</document>

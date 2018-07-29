@@ -1,0 +1,54 @@
+<document>
+    <productTemplate>
+        <banner>
+            <infoList>
+                <info>
+                    <header>
+                        <title>Délka</title>
+                    </header>
+                    <text>{{ details.totalDuration }} minut</text>
+                </info>
+                <info>
+                    <header>
+                        <title>Premiéra</title>
+                    </header>
+                    <text>{{ details.year }}</text>
+                    <text>{{ details.channelPremiere }}</text>
+                </info>
+            </infoList>
+            <stack>
+                <title style="tv-text-style: title3;">{{ details.localTitle }}</title>
+                <text style="tv-text-style: headline; margin: 0;">{{ details.episodeTitle }}</text>
+                <row>
+                    <ratingBadge value="{{details.ratingFloat}}"></ratingBadge>
+                    <text>{{ details.ratingPercentage }}%</text>
+                </row>
+                <description allowsZooming="true" moreLabel="more">{{ details.annotation }}</description>
+                <row>
+                    <buttonLockup data-href-page="play" data-href-page-options="{{toJSON details }}">
+                        <badge src="resource://button-play"/>
+                        <title>Přehrát</title>
+                    </buttonLockup>
+                    <buttonLockup data-href-page="show-page" data-href-page-options="{{toJSON details }}">
+                        <badge src="resource://list-chevron"/>
+                        <title>Stránka pořadu</title>
+                    </buttonLockup>
+                </row>
+            </stack>
+            <heroImg src="{{ splash169 details.images.splash169 }}" style="margin-left: 20; width: 544;"/>
+        </banner>
+        <shelf>
+            <header>
+                <title>Související pořady</title>
+            </header>
+            <section>
+                {{#each related }}
+                <lockup data-href-page="programme-list" data-href-page-options="{{toJSON this }}">
+                    <img src="{{ fullImageURL imageURL }}" width="384" height="216" />
+                    <title>{{ title }}</title>
+                </lockup>
+                {{/each}}
+            </section>
+        </shelf>
+    </productTemplate>
+</document>
