@@ -1,20 +1,12 @@
 <document>
-<searchTemplate>
-   <searchField id="searchField" />
-   {{#if result}}
-   {{#each result}}
-   <shelf>
-        <header>
-        <title>Výsledky</title>
-        </header>
-        <section>
-            <lockup>
-                <img />
-                <title>{{localTitle}}</title>
-            </lockup>
-        </section>
-    </shelf>
-    {{/each}}
-    {{/if}}
-</searchTemplate>
+    <searchTemplate>
+        <searchField id="searchField" />
+        <shelf>
+            <header>
+                <title id="test">Výsledky</title>
+            </header>
+            <section id="replace">
+            </section>
+        </shelf>
+    </searchTemplate>
 </document>
