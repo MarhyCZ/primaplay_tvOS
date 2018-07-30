@@ -7,19 +7,6 @@ import API from 'lib/prima.js'
 const SearchPage = ATV.Page.create({
   name: 'search',
   template: template,
-  events: {
-    select: 'onSelect',
-    highlight: 'onHighlight',
-    change: 'onChange'
-  },
-  onSelect (e) {
-    let element = e.target
-    console.log(element)
-  },
-  onChange (e) {
-    let element = e.target
-    console.log(element)
-  },
   afterReady (doc) {
     var searchField = doc.getElementById('searchField') // get the searchField element
     var keyboard = searchField.getFeature('Keyboard') // get the keyboard of the searchField
@@ -42,12 +29,11 @@ const SearchPage = ATV.Page.create({
           }, function (xhr) {
             // xhr failed
             var response = xhr.response
-
             console.log(response)
           })
       }
       getResults(function (currentResponse) {
-        doc.getElementById('test').innerHTML = 'Něco se děje, ale ne dostatek :/'
+        doc.getElementById('results').innerHTML = 'Výsledky'
         // let parsed = ATV.Page.makeDom({
         //  template: resultsTemplate,
         //  data: currentResponse

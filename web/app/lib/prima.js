@@ -83,7 +83,7 @@ const url = {
     return `${BASE_URL}/oauth/token`
   },
   search (query) {
-    return `${BASE_URL}/search/products/?limit=20&offset=0&query=${query}`
+    return `${BASE_URL}/search/products/?limit=10&offset=0&query=${query}`
   }
 }
 
