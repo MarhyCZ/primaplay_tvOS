@@ -16,27 +16,60 @@ const toQueryString = obj => (
   })
 ).join('&')
 
-const makeToken = () => {
-  const params = `grant_type=password&username=${neco}&password=${neco}`
+const makeToken = (user, pass) => {
+  const params = `grant_type=password&username=${user}&password=${pass}`
 
   const http = new XMLHttpRequest()
   http.open('POST', url.token, false)
+  http.responseType = 'json'
   http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
   http.send(params)
 
   if (http.status === 200) {
     const token = http.response.access_token
-    console.log(token)
+    const refreshToken = http.response.refresh_token
+    console.log('ref:' + refreshToken)
+    // Save to Apple TV localStorage
+    ATV.Settings.set('refresh_token', refreshToken)
+    console.log(http.response)
     return token
   }
   return 'Neco se pokazilo'
 }
 
-const xhrOptions = (params) => {
-  const baseParams = {
-    token: makeToken()
+const refreshToken = () => {
+  const refreshToken = ATV.Settings.get('refresh_token')
+  const params = `grant_type=refresh_token&refresh_token=${refreshToken}`
+  console.log('refreshParameters: ' + params)
+  const http = new XMLHttpRequest()
+  http.open('POST', url.token, false)
+  http.responseType = 'json'
+  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+  http.send(params)
+
+  if (http.status === 200) {
+    const token = http.response.access_token
+    console.log('Refreshuji:')
+    console.log(token)
+    return {
+      'X-OTT-Access-Token': token
+    }
   }
-  console.log(`${toQueryString(baseParams)}&${toQueryString(params)}`)
+  return ''
+}
+
+const primaGet = () => {
+  return {
+    responseType: 'json',
+    headers: refreshToken()
+  }
+}
+
+const xhrOptions = (params) => {
+  // const baseParams = {
+  //   token: makeToken()
+  // }
+  console.log(`${toQueryString()}&${toQueryString(params)}`)
   return {
     data: `${toQueryString(params)}`,
     headers: {
@@ -82,6 +115,9 @@ const url = {
   get token () {
     return `${BASE_URL}/oauth/token`
   },
+  get profile () {
+    return `${BASE_URL}/user/profile`
+  },
   search (query) {
     return `${BASE_URL}/search/products/?limit=10&offset=0&query=${query}`
   }
@@ -98,6 +134,8 @@ const get = {
 
 export default {
   xhrOptions,
+  primaGet,
+  makeToken,
   url,
   get
 }

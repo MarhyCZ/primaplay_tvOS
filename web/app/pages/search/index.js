@@ -8,8 +8,8 @@ const SearchPage = ATV.Page.create({
   name: 'search',
   template: template,
   afterReady (doc) {
-    var searchField = doc.getElementById('searchField') // get the searchField element
-    var keyboard = searchField.getFeature('Keyboard') // get the keyboard of the searchField
+    let searchField = doc.getElementById('searchField') // get the searchField element
+    let keyboard = searchField.getFeature('Keyboard') // get the keyboard of the searchField
     keyboard.onTextChange = function () { // register listener on event onTextChange
       makeSearch(keyboard.text) // do something with the current text
     }
@@ -22,13 +22,13 @@ const SearchPage = ATV.Page.create({
           .get(API.url.search(text))
           .then(function (xhr) {
             // xhr succeeded
-            var vysledky = xhr.response
+            let vysledky = xhr.response
             // console.log('Response')
             // console.log(vysledky)
             callback(vysledky)
           }, function (xhr) {
             // xhr failed
-            var response = xhr.response
+            let response = xhr.response
             console.log(response)
           })
       }

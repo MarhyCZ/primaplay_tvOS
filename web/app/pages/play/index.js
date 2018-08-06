@@ -7,7 +7,7 @@ import API from 'lib/prima.js'
 const PlayPage = ATV.Page.create({
   name: 'play',
   ready (options, resolve, reject) {
-    const getPlaylistUrl = ATV.Ajax.get(API.url.play(options.id))
+    const getPlaylistUrl = ATV.Ajax.get(API.url.play(options.id), API.primaGet())
 
     // Then resolve them at once
     Promise
@@ -35,7 +35,7 @@ const PlayPage = ATV.Page.create({
         ATV.Navigation.showError({
           data: {
             title: 'Chyba',
-            message: response.userMessage + ' (Asi neni implementovano)'
+            message: response.userMessage
           },
           type: 'document'
         })

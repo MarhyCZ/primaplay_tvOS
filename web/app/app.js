@@ -16,6 +16,7 @@ import HomePage from 'pages/home'
 import PrimacekPage from 'pages/primacek'
 import SearchPage from 'pages/search'
 import LivePage from 'pages/live'
+import SettingsPage from 'pages/settings'
 
 import ShowPage from 'pages/show-page'
 import EpisodesPage from 'pages/episodes-list'
@@ -47,6 +48,12 @@ ATV.start({
       name: 'Živé vysílání',
       page: LivePage,
       attributes: {reloadOnSelect: true}
+    },
+    {
+      id: 'settings',
+      name: 'Nastavení',
+      page: SettingsPage,
+      attributes: {reloadOnSelect: true}
     }]
   },
   templates: {
@@ -72,6 +79,7 @@ ATV.start({
     ATV.Menu.setOptions({
       loadingMessage: 'Načítání'
     })
+    ATV.Settings.remove('refresh_token')
     ATV.Navigation.navigateToMenuPage()
   },
   onResume (options) {
