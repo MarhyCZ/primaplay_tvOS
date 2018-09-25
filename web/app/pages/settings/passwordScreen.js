@@ -1,17 +1,14 @@
 import ATV from 'atvjs'
 import password from './passwordTemplate.hbs'
 
-let data
-
 const PasswordScreen = ATV.Page.create({
   name: 'password',
   template: password,
   ready (options, resolve, reject) {
-    data = {
-      username: options.username,
-      pass: ''
+    let data = {
+      username: ATV.Settings.get('refresh_token')
     }
-    resolve(options)
+    resolve(data)
   },
   onSelect: function (e) {
     let element = e.target
@@ -27,8 +24,8 @@ const PasswordScreen = ATV.Page.create({
       let textField = doc.getElementsByTagName('textField').item(0)
       let keyboard = textField.getFeature('Keyboard')
 
-      data.pass = keyboard.text
-      ATV.Navigation.navigate('settings', data, true)
+      ATV.Settings.set('password', keyboard.text)
+      ATV.Navigation.navigate('settings', {}, true)
     }
     doc
       .getElementById('back')

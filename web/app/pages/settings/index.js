@@ -10,37 +10,37 @@ const SettingsPage = ATV.Page.create({
   name: 'settings',
   template: template,
   ready (options, resolve, reject) {
-    if (!(_.isObject(options))) {
+    if (_.isUndefined(ATV.Settings.get('password'))) {
       resolve(template)
-    }
+    } else {
+      // let login = ATV.Ajax
+      //   .post(API.url.token, API.xhrOptions({
+      //     grant_type: 'password',
+      //     password: options.pass,
+      //     username: options.username
+      //   }))
 
-    // let login = ATV.Ajax
-    //   .post(API.url.token, API.xhrOptions({
-    //     grant_type: 'password',
-    //     password: options.pass,
-    //     username: options.username
-    //   }))
+      let login = API.makeToken()
+      let getUserInfo = ATV.Ajax.get(API.url.profile, API.primaGet())
 
-    let login = API.makeToken(options.username, options.pass)
-    let getUserInfo = ATV.Ajax.get(API.url.profile, API.primaGet())
-
-    Promise
-      .all([getUserInfo])
-      .then((xhrs) => {
-        let response = xhrs[0].response
-        console.log(response)
-        resolve(response)
-      }, (xhr) => {
-        let response = xhr.response
-        // error
-        ATV.Navigation.showError({
-          data: {
-            title: 'Chyba',
-            message: response.userMessage
-          },
-          type: 'modal'
+      Promise
+        .all([getUserInfo])
+        .then((xhrs) => {
+          let response = xhrs[0].response
+          console.log(response)
+          resolve(response)
+        }, (xhr) => {
+          let response = xhr.response
+          // error
+          ATV.Navigation.showError({
+            data: {
+              title: 'Chyba',
+              message: response.userMessage
+            },
+            type: 'modal'
+          })
         })
-      })
+    }
   },
   onSelect: function (e) {
     let element = e.target

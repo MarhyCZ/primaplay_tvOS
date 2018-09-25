@@ -16,7 +16,9 @@ const toQueryString = obj => (
   })
 ).join('&')
 
-const makeToken = (user, pass) => {
+const makeToken = () => {
+  let user = ATV.Settings.get('username')
+  let pass = ATV.Settings.get('password')
   const params = `grant_type=password&username=${user}&password=${pass}`
 
   const http = new XMLHttpRequest()

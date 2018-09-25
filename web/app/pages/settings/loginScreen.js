@@ -19,7 +19,8 @@ const LoginScreen = ATV.Page.create({
     const nextFunction = () => {
       let textField = doc.getElementsByTagName('textField').item(0)
       let keyboard = textField.getFeature('Keyboard')
-      ATV.Navigation.navigate('password', {username: keyboard.text}, true)
+      ATV.Settings.set('username', keyboard.text)
+      ATV.Navigation.navigate('password', {}, true)
     }
     doc
       .getElementById('back')
