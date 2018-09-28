@@ -6,10 +6,6 @@ import PasswordScreen from './passwordScreen.js'
 const LoginScreen = ATV.Page.create({
   name: 'login',
   template: login,
-  onSelect: function (e) {
-    let element = e.target
-    let elementType = element.nodeName.toLowerCase()
-  },
   afterReady (doc) {
     const backFunction = () => {
       console.log('Neco se deje')
@@ -22,6 +18,7 @@ const LoginScreen = ATV.Page.create({
       ATV.Settings.set('username', keyboard.text)
       ATV.Navigation.navigate('password', {}, true)
     }
+
     doc
       .getElementById('back')
       .addEventListener('select', backFunction)

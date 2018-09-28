@@ -58,6 +58,7 @@
   },
   "dependencies": {
     "atvjs": "^0.2.7",
-    "handlebars": "^4.0.12"
+    "handlebars": "^4.0.12",
+    "uuid": "^3.3.2"
   }
 }

@@ -6,13 +6,9 @@ const PasswordScreen = ATV.Page.create({
   template: password,
   ready (options, resolve, reject) {
     let data = {
-      username: ATV.Settings.get('refresh_token')
+      username: ATV.Settings.get('username')
     }
     resolve(data)
-  },
-  onSelect: function (e) {
-    let element = e.target
-    let elementType = element.nodeName.toLowerCase()
   },
   afterReady (doc) {
     const backFunction = () => {

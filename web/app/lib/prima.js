@@ -1,5 +1,6 @@
 import ATV from 'atvjs'
 import staticData from './static-data'
+import uuidv4 from 'uuid/v4'
 
 const _ = ATV._ // lodash
 
@@ -41,29 +42,71 @@ const makeToken = () => {
 
 const refreshToken = () => {
   const refreshToken = ATV.Settings.get('refresh_token')
-  const params = `grant_type=refresh_token&refresh_token=${refreshToken}`
-  console.log('refreshParameters: ' + params)
+  const body = `grant_type=refresh_token&refresh_token=${refreshToken}`
+  console.log('refreshParameters: ' + body)
+
   const http = new XMLHttpRequest()
   http.open('POST', url.token, false)
   http.responseType = 'json'
   http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-  http.send(params)
+  http.send(body)
 
   if (http.status === 200) {
     const token = http.response.access_token
     console.log('Refreshuji:')
     console.log(token)
-    return {
-      'X-OTT-Access-Token': token
-    }
+    return token
   }
   return ''
 }
 
+const registerDevice = (title) => {
+  let uid = ATV.Settings.get('deviceUID')
+  if (uid === undefined) {
+    uid = uuidv4()
+    ATV.Settings.set('deviceUID', uid)
+  }
+  let body = JSON.stringify({
+    'title': title,
+    'deviceUID': uid,
+    'slotType': 'IOS'
+  })
+
+  let access_token = refreshToken()
+  const http = new XMLHttpRequest()
+  http.open('POST', url.slots, false)
+  http.responseType = 'json'
+  http.setRequestHeader('Content-type', 'application/json')
+  http.setRequestHeader('X-OTT-Access-Token', access_token)
+  http.send(body)
+
+  if (http.status === 200) {
+    const slotId = http.response.slotId
+    console.log('Ziskavam a ukladam slotID:')
+    console.log(slotId)
+    ATV.Settings.set('slotID', slotId)
+    return true
+  }
+  console.log(http.response)
+  return false
+}
+
 const primaGet = () => {
+  let slotId = ATV.Settings.get('slotID')
+  let headers
+  if (_.isEmpty(slotId)) {
+    headers = {
+      'X-OTT-Access-Token': refreshToken()
+    }
+  } else {
+    headers = {
+      'X-OTT-Access-Token': refreshToken(),
+      'X-OTT-Device': slotId
+    }
+  }
   return {
     responseType: 'json',
-    headers: refreshToken()
+    headers: headers
   }
 }
 
@@ -120,6 +163,9 @@ const url = {
   get profile () {
     return `${BASE_URL}/user/profile`
   },
+  get slots () {
+    return `${BASE_URL}/user/slots`
+  },
   search (query) {
     return `${BASE_URL}/search/products/?limit=10&offset=0&query=${query}`
   }
@@ -138,6 +184,7 @@ export default {
   xhrOptions,
   primaGet,
   makeToken,
+  registerDevice,
   url,
   get
 }

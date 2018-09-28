@@ -2,6 +2,7 @@ import ATV from 'atvjs'
 import template from './template.hbs'
 
 import LoginScreen from './loginScreen.js'
+import DeviceScreen from './deviceScreen.js'
 
 import API from 'lib/prima.js'
 const _ = ATV._
@@ -28,7 +29,16 @@ const SettingsPage = ATV.Page.create({
         .then((xhrs) => {
           let response = xhrs[0].response
           console.log(response)
-          resolve(response)
+          let premium = {}
+          if (response.level.localeCompare('PREMIUM') === 0) {
+            let registerState = _.isEmpty(ATV.Settings.get('SlotID')) ? 'Registrováno' : 'Neregistrováno'
+            premium.registerState = registerState
+          }
+
+          resolve({
+            response,
+            premium: premium
+          })
         }, (xhr) => {
           let response = xhr.response
           // error
@@ -55,6 +65,10 @@ const SettingsPage = ATV.Page.create({
       ATV.Navigation.navigateToMenuPage()
     }
 
+    const registerDevice = () => {
+      ATV.Navigation.navigate('device', {}, true)
+    }
+
     doc
       .getElementById('login')
       .addEventListener('select', beginLogin)
@@ -62,6 +76,10 @@ const SettingsPage = ATV.Page.create({
     doc
       .getElementById('menu')
       .addEventListener('select', backToMenu)
+
+    doc
+      .getElementById('device')
+      .addEventListener('select', registerDevice)
   }
 })
 
