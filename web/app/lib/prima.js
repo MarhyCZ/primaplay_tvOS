@@ -30,10 +30,10 @@ const makeToken = () => {
 
   if (http.status === 200) {
     const token = http.response.access_token
-    const refreshToken = http.response.refresh_token
-    console.log('ref:' + refreshToken)
+    const refreshID = http.response.refresh_token
+    console.log('ref:' + refreshID)
     // Save to Apple TV localStorage
-    ATV.Settings.set('refresh_token', refreshToken)
+    ATV.Settings.set('refresh_token', refreshID)
     console.log(http.response)
     return token
   }
@@ -41,8 +41,8 @@ const makeToken = () => {
 }
 
 const refreshToken = () => {
-  const refreshToken = ATV.Settings.get('refresh_token')
-  const body = `grant_type=refresh_token&refresh_token=${refreshToken}`
+  const refreshID = ATV.Settings.get('refresh_token')
+  const body = `grant_type=refresh_token&refresh_token=${refreshID}`
   console.log('refreshParameters: ' + body)
 
   const http = new XMLHttpRequest()
@@ -93,12 +93,15 @@ const registerDevice = (title) => {
 
 const primaGet = () => {
   let slotId = ATV.Settings.get('slotID')
+  let refreshID = ATV.Settings.get('refresh_token')
+
   let headers
-  if (_.isEmpty(slotId)) {
+  if (_.isEmpty(slotId) && !_.isEmpty(refreshID)) {
     headers = {
       'X-OTT-Access-Token': refreshToken()
     }
-  } else {
+  }
+  if (!_.isEmpty(slotId)) {
     headers = {
       'X-OTT-Access-Token': refreshToken(),
       'X-OTT-Device': slotId
