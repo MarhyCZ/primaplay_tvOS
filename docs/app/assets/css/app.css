@@ -61,20 +61,25 @@
     background-color: rgba(255,255,255, 0.95)
 }
 
-
+.footerButton {
+    margin: 0 0 20 0;
+}
 @media tv-template and (tv-theme:light) {
     .foo {
         background-color: rgb(0, 0, 0);
+        color: white;
     }
 }
 
 @media tv-template and (tv-theme:dark) {
     .foo {
         background-color: rgb(255, 255, 255);
+        color: white;
     }
 }
 .foo {
     background-color: rgb(255, 255, 255);
+    color: black;
 }
 /*
 @media -tv-template and (-tv-uber) {
