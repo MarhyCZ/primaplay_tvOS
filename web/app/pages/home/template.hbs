@@ -7,7 +7,7 @@
             <carousel>
                 <section>
                     {{#each banner }}
-                    <lockup data-href-page="programme-details" data-href-page-options="{{toJSON this }}">
+                    <lockup data-href-page="{{ showOrMovie productCategory }}" data-href-page-options="{{toJSON this }}">
                         <img src="{{ splashAWeb images.splashAWeb }}" class="darkImage" style="width:960; height:440;" />
                         <overlay>
                             <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
@@ -52,7 +52,7 @@
                 </header>
                 <section>
                     {{#each porady }}
-                    <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
+                    <lockup data-href-page="play" data-href-page-options="{{toJSON this }}">
                         <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
                         <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
                         <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>

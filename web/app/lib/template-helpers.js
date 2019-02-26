@@ -52,6 +52,10 @@ const helpers = {
   splashWeb (imageID) {
     let url = `https://static.play-backend.iprima.cz/cdn/img/splashWeb/${imageID}/big`
     return new Handlebars.SafeString(url)
+  },
+  showOrMovie (productCategory) {
+    let page = productCategory === 'MOVIE' ? 'programme-details' : 'show-page'
+    return new Handlebars.SafeString(page)
   }
 }
 
