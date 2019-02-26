@@ -7,8 +7,10 @@
             <carousel>
                 <section>
                     {{#each banner }}
-                    <lockup data-href-page="{{ showOrMovie productCategory }}" data-href-page-options="{{toJSON this }}">
-                        <img src="{{ splashAWeb images.splashAWeb }}" class="darkImage" style="width:960; height:440;" />
+                    <lockup data-href-page="{{ showOrMovie productCategory }}"
+                        data-href-page-options="{{toJSON this }}">
+                        <img src="{{ splashAWeb images.splashAWeb }}" class="darkImage"
+                            style="width:960; height:440;" />
                         <overlay>
                             <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
                             <text class="overlayTextLayout">{{ year }}</text>
@@ -26,7 +28,8 @@
                     <lockup data-href-page="shows-grid" data-href-page-options="{{toJSON this }}">
                         <img class="tile21x9" src="{{ asset_url 'img/thumbnails/21x9.png'}}" />
                         <overlay>
-                            <title class="showAndScrollTextOnHighlight" style="tv-position: center; tv-align:center; text-align:center;">{{title}}</title>
+                            <title class="showAndScrollTextOnHighlight"
+                                style="tv-position: center; tv-align:center; text-align:center;">{{title}}</title>
                         </overlay>
                     </lockup>
                     {{/each}}
@@ -38,7 +41,7 @@
                 </header>
                 <section>
                     {{#each doporucujeme }}
-                    <lockup data-href-page="programme-details" data-href-page-options="{{toJSON this }}">
+                    <lockup data-href-page="play" data-href-page-options="{{toJSON this }}">
                         <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
                         <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
                         <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>
@@ -52,7 +55,7 @@
                 </header>
                 <section>
                     {{#each porady }}
-                    <lockup data-href-page="play" data-href-page-options="{{toJSON this }}">
+                    <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
                         <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
                         <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
                         <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>
@@ -90,11 +93,11 @@
             </shelf>
             <shelf>
                 <header>
-                    <title>Pořady</title>
+                    <title>Videopůjčovna</title>
                 </header>
                 <section>
-                    {{#each porady }}
-                    <lockup data-href-page="show-page" data-href-page-options="{{toJSON this }}">
+                    {{#each videopujcovna }}
+                    <lockup data-href-page="programme-details" data-href-page-options="{{toJSON this }}">
                         <img class="tile16x9" src="{{ splash169 images.splash169 }}" />
                         <title class="showAndScrollTextOnHighlight">{{ localTitle }}</title>
                         <text class="showAndScrollTextOnHighlight">{{ episodeTitle }}</text>
