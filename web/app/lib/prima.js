@@ -183,11 +183,22 @@ const get = {
   }
 }
 
+const episodes = {
+  sort(episodes) {
+    // if episodes have numbers, sort by the numbers
+    let episodeOrderKey = e => (10000*(e.seasonNumber || 0) + 1*(e.episodeNumber || 0));
+    episodes.sort((a, b) => (episodeOrderKey(a) - episodeOrderKey(b)));
+
+    return episodes;
+  }
+}
+
 export default {
   xhrOptions,
   primaGet,
   makeToken,
   registerDevice,
   url,
-  get
+  get,
+  episodes
 }

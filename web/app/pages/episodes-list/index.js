@@ -18,20 +18,22 @@ const EpisodesPage = ATV.Page.create({
     }
     let getEpisodes = ATV.Ajax.get(API.url.itemsList({
       category: 'EPISODE',
-      limit: 20,
+      limit: 1000,
       offset: 0,
       relProduct: product,
       order: order
     }))
-
+                                     
     // Then resolve them at once
     Promise
       .all([getEpisodes])
       .then((xhrs) => {
-        let episodes = xhrs[0].response
+        let episodes = xhrs[0].response.result;
 
+        episodes = API.episodes.sort(episodes);
+            
         resolve({
-          episodes: episodes.result
+          episodes: episodes
 
         })
       }, (xhr) => {
