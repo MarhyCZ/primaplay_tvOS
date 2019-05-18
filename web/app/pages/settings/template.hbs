@@ -5,31 +5,40 @@
     </head>
     <divTemplate class="foo">
         <background>
-        <img src="{{asset_url 'img/backgrounds/playful.png'}}"/>
-    </background>
-    <header>
+          <img src="{{asset_url 'img/backgrounds/playful.png'}}"/>
+        </background>
 
-    </header>
-        <title style="tv-align:center;tv-position:center;tv-text-style: title1;"><img src="{{asset_url 'img/iprima.png'}}" width="200" />iPrima účet</title>
-        <description style="tv-align:center;tv-position:center;tv-text-style: body; tv-text-max-lines: 3; margin: 20px 0 0 0;">Pro sledování pořadů, které vyžadují free nebo premium účet iPrima je nutné přihlášení</description>
-        {{#if response.user}}
-        <text id="results" style="tv-align:center;tv-position:center;tv-text-style: caption1; margin: 20px 0 0 0;">Aktuální stav: Přihlášen!</text>
-        <text id="results" style="tv-align:center;tv-position:center;tv-text-style: caption1;">{{response.user.username}}</text>
-        {{else}}
-        <text id="results" style="tv-align:center;tv-position:center;tv-text-style: caption1; margin: 20px 0 0 0;">Aktuální stav: Nepřihlášen</text>
-        {{/if}}
-        {{#if response.user}}
-        <text id="results" style="tv-align:center;tv-position:center;tv-text-style: caption1; margin: 20px 0 0 0;">V případě PREMIUM verze účtu je pro přehrávání videí je vyžadována registrace zařízení na serveru iPrima.</text>
-        <text id="results" style="tv-align:center;tv-position:center;tv-text-style: caption1;">Aktuální stav: {{premium.registerState}}</text>
-        <button id="device" class="space" style="tv-align:center;tv-position:center;tv-text-style: body; padding: 10 70; margin: 40px 0 0 0; background-color:#ff7b00; tv-highlight-color: #ff7b00; color: white;">
-            <text style="tv-highlight-color: #fff">Registrovat zařízení</text>
-        </button>
-        {{/if}}
-        <button id="login" class="space" style="tv-align:center;tv-position:center;tv-text-style: body; padding: 10 70; margin: 40px 0 0 0; background-color:#ff7b00; tv-highlight-color: #ff7b00; color: white;">
+        <header></header>
+
+        <title style="tv-align:center;tv-text-style: title3">Uživatelský účet</title>
+        <description style="tv-align:center;tv-text-style: body; margin: 20px 0 0 0;">Pro sledování pořadů, které vyžadují free nebo premium účet iPrima je nutné přihlášení</description>
+
+        <row style=" tv-align:center; margin: 40px 0 40px 0">
+          {{#if response.user}}
+          <text style="tv-align: left; tv-text-style: caption1; margin: 0 0 0 500px">Účet: {{response.user.username}}</text>
+          {{else}}
+          <text style="tv-align: left; tv-text-style: caption1; margin: 0 0 0 500px">Účet: Nepřihlášen</text>
+          {{/if}}
+          <button id="login" class="space" style="tv-align: right; tv-text-style: body; padding: 10 70; margin: 40px 500px 40px 40px; background-color:#ff7b00; tv-highlight-color: #ff7b00; color: white;">
             <text style="tv-highlight-color: #fff">Přihlásit se</text>
-        </button>
-        <button id="menu" class="space" style="tv-align:center;tv-position:center;tv-text-style: body; padding: 10 70; margin: 40px 0 0 0; background-color:#ff7b00; tv-highlight-color: #ff7b00; color: white;">
+          </button>
+        </row>
+
+        {{#if response.user}}
+        <title style="tv-align:center;tv-text-style: title3">Registrace zařízení</title>
+        <description style="tv-align:center;tv-text-style: body; margin: 20px 0 0 0;">V případě PREMIUM verze účtu je pro přehrávání videí je vyžadována registrace zařízení na serveru iPrima.</description>
+
+        <row style=" tv-align:center; margin: 40px 0 40px 0">
+          <text style="tv-align: left; tv-text-style: caption1; margin: 0 0 0 500px">Zařízení: {{premium.registerState}}</text>
+          <button id="device" class="space" style="tv-align: right; tv-text-style: body; padding: 10 70; margin: 40px 500px 40px 40px; background-color:#ff7b00; tv-highlight-color: #ff7b00; color: white;">
+              <text style="tv-highlight-color: #fff">Registrovat zařízení</text>
+          </button>
+        </row>
+        {{/if}}
+
+        <button id="menu" class="space" style="tv-align:center;tv-text-style: body; padding: 10 70; margin: 80px 0 0 0; background-color:#ff7b00; tv-highlight-color: #ff7b00; color: white;">
             <text style="tv-highlight-color: #fff">Zpět na hlavní stránku</text>
         </button>
+
     </divTemplate>
 </document>
