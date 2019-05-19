@@ -7,21 +7,15 @@ const LoginScreen = ATV.Page.create({
   name: 'login',
   template: login,
   afterReady (doc) {
-    const backFunction = () => {
-      console.log('Neco se deje')
-      ATV.Navigation.navigate('settings', {}, true)
-    }
+    let textField = doc.getElementsByTagName('textField').item(0)
+    let keyboard = textField.getFeature('Keyboard')
+    keyboard.text = ATV.Settings.get('username')
 
     const nextFunction = () => {
       let textField = doc.getElementsByTagName('textField').item(0)
       let keyboard = textField.getFeature('Keyboard')
-      ATV.Settings.set('username', keyboard.text)
-      ATV.Navigation.navigate('password', {}, true)
+      ATV.Navigation.navigate('password', {'username' : keyboard.text})
     }
-
-    doc
-      .getElementById('back')
-      .addEventListener('select', backFunction)
 
     doc
       .getElementById('next')

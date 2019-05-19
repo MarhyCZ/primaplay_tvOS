@@ -17,9 +17,9 @@ const toQueryString = obj => (
   })
 ).join('&')
 
-const makeToken = () => {
-  let user = ATV.Settings.get('username')
-  let pass = ATV.Settings.get('password')
+const loginAndGetRefreshToken = (username, password) => {
+  let user = username || ATV.Settings.get('username')
+  let pass = password || ATV.Settings.get('password')
   const params = `grant_type=password&username=${user}&password=${pass}`
 
   const http = new XMLHttpRequest()
@@ -37,10 +37,10 @@ const makeToken = () => {
     console.log(http.response)
     return token
   }
-  return 'Neco se pokazilo'
+  throw http.response
 }
 
-const refreshToken = () => {
+const getAccessToken = () => {
   const refreshID = ATV.Settings.get('refresh_token')
   const body = `grant_type=refresh_token&refresh_token=${refreshID}`
   console.log('refreshParameters: ' + body)
@@ -72,7 +72,7 @@ const registerDevice = (title) => {
     'slotType': 'IOS'
   })
 
-  let access_token = refreshToken()
+  let access_token = getAccessToken()
   const http = new XMLHttpRequest()
   http.open('POST', url.slots, false)
   http.responseType = 'json'
@@ -88,7 +88,7 @@ const registerDevice = (title) => {
     return true
   }
   console.log(http.response)
-  return false
+  throw http.response
 }
 
 const primaGet = () => {
@@ -98,12 +98,12 @@ const primaGet = () => {
   let headers
   if (_.isEmpty(slotId) && !_.isEmpty(refreshID)) {
     headers = {
-      'X-OTT-Access-Token': refreshToken()
+      'X-OTT-Access-Token': getAccessToken()
     }
   }
   if (!_.isEmpty(slotId)) {
     headers = {
-      'X-OTT-Access-Token': refreshToken(),
+      'X-OTT-Access-Token': getAccessToken(),
       'X-OTT-Device': slotId
     }
   }
@@ -186,7 +186,7 @@ const get = {
 export default {
   xhrOptions,
   primaGet,
-  makeToken,
+  loginAndGetRefreshToken,
   registerDevice,
   url,
   get

@@ -22,7 +22,12 @@ const SettingsPage = ATV.Page.create({
       //     username: options.username
       //   }))
 
-      let login = API.makeToken()
+      try {
+        API.loginAndGetRefreshToken()
+      }
+      catch (ex) {
+        console.log(ex)
+      }
       let getUserInfo = ATV.Ajax.get(API.url.profile, API.primaGet())
 
       Promise
@@ -42,15 +47,16 @@ const SettingsPage = ATV.Page.create({
             premium: premiumInfo
           })
         }, (xhr) => {
-          let response = xhr.response
           // error
-          ATV.Navigation.showError({
-            data: {
-              title: 'Chyba',
-              message: response.userMessage
-            },
-            type: 'modal'
-          })
+          resolve(template) // we need to resolve the template even here - login might be failing
+          //let response = xhr.response
+          //ATV.Navigation.showError({
+          //  data: {
+          //    title: 'Chyba',
+          //    message: response.userMessage
+          //  },
+          //  type: 'modal'
+          //})
         })
     }
   },
@@ -60,7 +66,7 @@ const SettingsPage = ATV.Page.create({
   },
   afterReady (doc) {
     const beginLogin = () => {
-      ATV.Navigation.navigate('login', {}, true)
+      ATV.Navigation.navigate('login')
     }
 
     const backToMenu = () => {
@@ -68,7 +74,7 @@ const SettingsPage = ATV.Page.create({
     }
 
     const registerDevice = () => {
-      ATV.Navigation.navigate('device', {}, true)
+      ATV.Navigation.navigate('device')
     }
 
     doc

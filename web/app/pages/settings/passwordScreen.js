@@ -1,31 +1,40 @@
 import ATV from 'atvjs'
+import API from 'lib/prima.js'
 import password from './passwordTemplate.hbs'
 
 const PasswordScreen = ATV.Page.create({
   name: 'password',
   template: password,
   ready (options, resolve, reject) {
+    this.username = options['username']
     let data = {
-      username: ATV.Settings.get('username')
+      username: options['username']
     }
     resolve(data)
   },
   afterReady (doc) {
-    const backFunction = () => {
-      console.log('Neco se deje')
-      ATV.Navigation.navigate('settings', {}, true)
-    }
-
     const nextFunction = () => {
       let textField = doc.getElementsByTagName('textField').item(0)
       let keyboard = textField.getFeature('Keyboard')
 
-      ATV.Settings.set('password', keyboard.text)
-      ATV.Navigation.navigate('settings', {}, true)
+      let username = this.username
+      let password = keyboard.text
+      try {
+        API.loginAndGetRefreshToken(username, password);
+        ATV.Settings.set('username', username)
+        ATV.Settings.set('password', password)
+        ATV.Navigation.clear()
+        ATV.Navigation.navigate('settings')
+      }
+      catch (ex) {
+        ATV.Navigation.showError({
+          data: {
+            title: 'Chyba při přihlášení',
+            message: ex.userMessage
+          }
+        })
+      }
     }
-    doc
-      .getElementById('back')
-      .addEventListener('select', backFunction)
 
     doc
       .getElementById('next')
