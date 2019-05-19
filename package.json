@@ -30,25 +30,25 @@
   },
   "homepage": "https://github.com/marhycz/primaplay_tvOS#readme",
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.3.1",
-    "babel-loader": "^8.0.5",
-    "copy-webpack-plugin": "^5.0.0",
-    "eslint": "^5.13.0",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.3",
+    "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.0.1",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "handlebars-loader": "^1.7.1",
-    "raw-loader": "^1.0.0",
-    "webpack": "^4.29.3",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.0"
+    "raw-loader": "^2.0.0",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
   },
   "dependencies": {
-    "atvjs": "^0.2.7",
-    "handlebars": "^4.1.0",
+    "atvjs": "^0.2.9",
+    "handlebars": "^4.1.2",
     "uuid": "^3.3.2"
   }
 }
