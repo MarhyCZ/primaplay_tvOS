@@ -6,7 +6,7 @@ import DeviceScreen from './deviceScreen.js'
 
 import API from 'lib/prima.js'
 const _ = ATV._
-let premium = false
+let isPremium = false
 
 const SettingsPage = ATV.Page.create({
   name: 'settings',
@@ -22,7 +22,15 @@ const SettingsPage = ATV.Page.create({
       //     username: options.username
       //   }))
 
-      let login = API.makeToken()
+      try {
+        API.loginAndGetRefreshToken()
+      }
+      catch (ex) {
+        console.log(ex)
+      }
+      let isDeviceRegistered = !_.isEmpty(ATV.Settings.get('slotID'));
+      let deviceName = ATV.Settings.get('deviceName');
+
       let getUserInfo = ATV.Ajax.get(API.url.profile, API.primaGet())
 
       Promise
@@ -30,11 +38,11 @@ const SettingsPage = ATV.Page.create({
         .then((xhrs) => {
           let response = xhrs[0].response
           console.log(response)
+
+          isPremium = (response.level.localeCompare('PREMIUM') === 0);
           let premiumInfo = {}
-          if (response.level.localeCompare('PREMIUM') === 0) {
-            premium = true
-            let registerState = _.isEmpty(ATV.Settings.get('SlotID')) ? 'Registrováno' : 'Neregistrováno'
-            premiumInfo.registerState = registerState
+          if (isPremium) {
+            premiumInfo.deviceRegistrationDesc = (isDeviceRegistered ? "Registrováno" + (deviceName ? ` (${deviceName})` : "") : "Neregistrováno");
           }
 
           resolve({
@@ -42,15 +50,16 @@ const SettingsPage = ATV.Page.create({
             premium: premiumInfo
           })
         }, (xhr) => {
-          let response = xhr.response
           // error
-          ATV.Navigation.showError({
-            data: {
-              title: 'Chyba',
-              message: response.userMessage
-            },
-            type: 'modal'
-          })
+          resolve(template) // we need to resolve the template even here - login might be failing
+          //let response = xhr.response
+          //ATV.Navigation.showError({
+          //  data: {
+          //    title: 'Chyba',
+          //    message: response.userMessage
+          //  },
+          //  type: 'modal'
+          //})
         })
     }
   },
@@ -60,7 +69,7 @@ const SettingsPage = ATV.Page.create({
   },
   afterReady (doc) {
     const beginLogin = () => {
-      ATV.Navigation.navigate('login', {}, true)
+      ATV.Navigation.navigate('login')
     }
 
     const backToMenu = () => {
@@ -68,7 +77,7 @@ const SettingsPage = ATV.Page.create({
     }
 
     const registerDevice = () => {
-      ATV.Navigation.navigate('device', {}, true)
+      ATV.Navigation.navigate('device')
     }
 
     doc
@@ -79,7 +88,7 @@ const SettingsPage = ATV.Page.create({
       .getElementById('menu')
       .addEventListener('select', backToMenu)
 
-    if (premium) {
+    if (isPremium) {
       doc
         .getElementById('device')
         .addEventListener('select', registerDevice)
