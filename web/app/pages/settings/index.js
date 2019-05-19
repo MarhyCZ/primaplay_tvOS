@@ -6,7 +6,7 @@ import DeviceScreen from './deviceScreen.js'
 
 import API from 'lib/prima.js'
 const _ = ATV._
-let premium = false
+let isPremium = false
 
 const SettingsPage = ATV.Page.create({
   name: 'settings',
@@ -28,6 +28,9 @@ const SettingsPage = ATV.Page.create({
       catch (ex) {
         console.log(ex)
       }
+      let isDeviceRegistered = !_.isEmpty(ATV.Settings.get('slotID'));
+      let deviceName = ATV.Settings.get('deviceName');
+
       let getUserInfo = ATV.Ajax.get(API.url.profile, API.primaGet())
 
       Promise
@@ -35,11 +38,11 @@ const SettingsPage = ATV.Page.create({
         .then((xhrs) => {
           let response = xhrs[0].response
           console.log(response)
+
+          isPremium = (response.level.localeCompare('PREMIUM') === 0);
           let premiumInfo = {}
-          if (response.level.localeCompare('PREMIUM') === 0) {
-            premium = true
-            let registerState = _.isEmpty(ATV.Settings.get('SlotID')) ? 'Registrováno' : 'Neregistrováno'
-            premiumInfo.registerState = registerState
+          if (isPremium) {
+            premiumInfo.deviceRegistrationDesc = (isDeviceRegistered ? "Registrováno" + (deviceName ? ` (${deviceName})` : "") : "Neregistrováno");
           }
 
           resolve({
@@ -85,7 +88,7 @@ const SettingsPage = ATV.Page.create({
       .getElementById('menu')
       .addEventListener('select', backToMenu)
 
-    if (premium) {
+    if (isPremium) {
       doc
         .getElementById('device')
         .addEventListener('select', registerDevice)
