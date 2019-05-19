@@ -56,6 +56,24 @@ const helpers = {
   showOrMovie (productCategory) {
     let page = productCategory === 'MOVIE' ? 'programme-details' : 'show-page'
     return new Handlebars.SafeString(page)
+  },
+  formatISO8601(input) {
+    let reptms = /^PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)(?:\.\d*)S)?$/;
+    let hours = 0, minutes = 0, seconds = 0, totalseconds;
+    
+    if (reptms.test(input)) {
+      var matches = reptms.exec(input);
+      if (matches[1]) hours = parseInt(matches[1]);
+      if (matches[2]) minutes = parseInt(matches[2]);
+      if (matches[3]) seconds = parseInt(matches[3]);
+      
+      if (hours > 0)
+        return `${hours}h ${minutes}m`;
+      else
+        return `${minutes}m`;
+    }
+    
+    return input;
   }
 }
 
