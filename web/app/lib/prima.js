@@ -96,12 +96,28 @@ const primaGet = () => {
   let refreshID = ATV.Settings.get('refresh_token')
 
   let headers
+
+  // we have refresh_token, but no slotID
   if (_.isEmpty(slotId) && !_.isEmpty(refreshID)) {
     headers = {
       'X-OTT-Access-Token': getAccessToken()
     }
   }
+
+
+  // we have slot ID
   if (!_.isEmpty(slotId)) {
+
+    // we should also have refresh_token in such case; try to get it if we don't
+    // have it
+    if (_.isEmpty(refreshID)) {
+      try {
+        loginAndGetRefreshToken();
+      }
+      catch (ex) {
+        console.log(ex)
+      }
+    }
     headers = {
       'X-OTT-Access-Token': getAccessToken(),
       'X-OTT-Device': slotId
